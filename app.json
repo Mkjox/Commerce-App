@@ -1,0 +1,12 @@
+{
+  "expo": {
+    "name": "CommerceApp",
+    "slug": "CommerceApp",
+    "version": "1.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ]
+  }
+}
