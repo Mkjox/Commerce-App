@@ -5,6 +5,8 @@ import HomeScreen from '../screens/HomeScreen';
 import CartScreen from '../screens/CartScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import CustomTabBar from '../components/CustomTabBar';
+import PostDetails from '../screens/ProductDetails';
+import FavoriteScreen from '../screens/FavoriteScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -15,6 +17,12 @@ function TabNavigator() {
             <Tab.Screen
                 name="Home"
                 component={HomeScreen}
+                options={{ headerShown: false }}
+            />
+
+            <Tab.Screen
+                name="Favorite"
+                component={FavoriteScreen}
                 options={{ headerShown: false }}
             />
 
@@ -37,10 +45,16 @@ export default function AppNavigator() {
     return (
         <NavigationContainer>
             <Stack.Navigator>
-                <Stack.Screen 
+                <Stack.Screen
                     name="TabNavigator"
                     component={TabNavigator}
-                    options={{headerShown: false}}
+                    options={{ headerShown: false }}
+                />
+
+                <Stack.Screen
+                    name="Details"
+                    component={PostDetails}
+                    options={{ headerShown: false }}
                 />
             </Stack.Navigator>
         </NavigationContainer>

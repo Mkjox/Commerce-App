@@ -4,7 +4,11 @@ import { View, TouchableOpacity, Text } from 'react-native';
 
 const CustomTabBar = ({ state, descriptors, navigation }) => {
     return (
-        <View style={{ flexDirection: 'row', height: 80, backgroundColor: colors.white }}>
+        <View style={{
+            flexDirection: 'row',
+            height: 80,
+            backgroundColor: colors.white,
+        }}>
             {state.routes.map((route, index) => {
                 const { options } = descriptors[route.key];
                 const label =
@@ -39,6 +43,9 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
                 if (route.name === 'Home') {
                     iconName = isFocused ? 'home' : 'home-outline';
                 }
+                else if (route.name === 'Favorite') {
+                    iconName = isFocused ? 'heart' : 'heart-outline';
+                }
                 else if (route.name === 'Cart') {
                     iconName = isFocused ? 'cart' : 'cart-outline';
                 }
@@ -64,7 +71,7 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
                                 backgroundColor: isFocused ? colors.cherry : 'transparent',
                                 borderRadius: 20,
                                 width: 90,
-                                flexDirection: 'row'
+                                flexDirection: 'row',
                             }}>
                             <MaterialCommunityIcons name={iconName} size={24} color={isFocused ? colors.white : colors.gray} />
                             <Text style={{ color: isFocused ? colors.white : 'transparent', fontSize: 12, marginTop: 3, marginLeft: 5 }}>{label}</Text>

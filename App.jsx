@@ -22,6 +22,7 @@ import {
 } from "@expo-google-fonts/poppins";
 import * as SplashScreen from 'expo-splash-screen';
 import AppNavigator from './src/navigation/AppNavigator';
+import { FavoritesProvider } from "./src/assets/context/FavoritesContext";
 
 export default function App() {
   const [loaded, error] = useFonts({
@@ -55,5 +56,9 @@ export default function App() {
     return null;
   }
 
-  return <AppNavigator />;
+  return (
+    <FavoritesProvider>
+      <AppNavigator />
+    </FavoritesProvider>
+  );
 }
