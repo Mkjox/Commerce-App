@@ -8,8 +8,8 @@ import { useNavigation } from "@react-navigation/native";
 import { getRequest } from '../assets/services/httpService';
 import { BASE_URL, PRODUCTS_URL } from "../assets/services/url";
 import FavoritesContext from "../assets/context/FavoritesContext";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import CartContext from "../assets/context/CartContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const HomeScreen = () => {
     const [data, setData] = useState([]);
@@ -29,6 +29,8 @@ const HomeScreen = () => {
         getPosts();
     }, []);
 
+    const cartCount = cart.length;
+
     if (loading) {
         return <ActivityIndicator size="large" color={colors.orange} />;
     }
@@ -37,10 +39,10 @@ const HomeScreen = () => {
         <SafeAreaView style={styles.container}>
             <View style={styles.menu}>
                 <Ionicons name='reorder-three-outline' size={40} style={styles.menuIcon} />
-                <View style={styles.menuRight}>
+                <TouchableOpacity style={styles.menuRight} onPress={() => navigation.navigate('Cart')}>
                     <FontAwesome name='shopping-bag' size={32} style={styles.bagIcon} />
-                    <Text style={styles.cartCount}>0 {/* Dynamic cart number goes here */}</Text>
-                </View>
+                    <Text style={styles.cartCount}>{cartCount}</Text>
+                </TouchableOpacity>
             </View>
 
             <View style={styles.productWrapper}>

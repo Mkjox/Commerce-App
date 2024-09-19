@@ -18,6 +18,8 @@ const CartScreen = () => {
         );
     };
 
+    const totalPrice = cart.reduce((sum, item) => sum + item.price, 0);
+
     const handleRemoveFromCart = (itemId) => {
         removeFromCart(itemId);
     }
@@ -50,13 +52,19 @@ const CartScreen = () => {
                     </Card>
                 )}
             />
+            <View style={styles.checkout}>
+                <Text style={styles.checkoutText}>Total Price: {totalPrice}$</Text>
+                <TouchableOpacity style={styles.button}>
+                    <Text style={styles.buttonText}>Confirm</Text>
+                </TouchableOpacity>
+            </View>
         </SafeAreaView>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
     },
     emptyText: {
         fontSize: 18,
@@ -115,6 +123,38 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 5
+    },
+    checkout: {
+        position: 'absolute',
+        bottom: 0,
+        backgroundColor: colors.white,
+        width: '100%',
+        height: 130,
+        opacity: 1,
+        borderTopLeftRadius: 15,
+        borderTopRightRadius: 15,
+        elevation: 5,
+        borderTopWidth: 0.5,
+        borderLeftWidth: 0.1,
+        borderRightWidth: 0.1
+    },
+    checkoutText: {
+        fontFamily: 'Poppins_500Medium',
+        marginLeft: 15,
+        marginTop: 25,
+        fontSize: 16
+    },
+    button: {
+        padding: 10,
+        backgroundColor: colors.tealdark,
+        width: 120,
+        alignSelf: 'center',
+        marginTop: 25,
+        borderRadius: 10
+    },
+    buttonText: {
+        textAlign: 'center',
+        color: colors.white
     }
 })
 
