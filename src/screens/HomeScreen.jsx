@@ -9,11 +9,13 @@ import { getRequest } from '../assets/services/httpService';
 import { BASE_URL, PRODUCTS_URL } from "../assets/services/url";
 import FavoritesContext from "../assets/context/FavoritesContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import CartContext from "../assets/context/CartContext";
 
 const HomeScreen = () => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const navigation = useNavigation();
+    const { cart, addToCart, removeFromCart } = useContext(CartContext);
     const { favorites, addFavorite, removeFavorite } = useContext(FavoritesContext);
 
     async function getPosts() {
@@ -48,10 +50,20 @@ const HomeScreen = () => {
                         keyExtractor={(item) => item.id.toString()}
                         renderItem={({ item }) => {
 
+                            const isAddedToCart = cart.some(cartItem => cartItem.id === item.id);
                             const isFavorite = favorites.some(favItem => favItem.id === item.id);
 
+                            const toggleCart = () => {
+                                if (isAddedToCart) {
+                                    removeFromCart(item.id);
+                                }
+                                else {
+                                    addToCart(item);
+                                }
+                            };
+
                             const toggleHeart = () => {
-                                if(isFavorite) {
+                                if (isFavorite) {
                                     removeFavorite(item.id);
                                 }
                                 else {
@@ -59,31 +71,39 @@ const HomeScreen = () => {
                                 }
                             };
 
+                            const cartIcon = isAddedToCart ? 'cart-arrow-down' : 'cart-plus';
                             const heartIcon = isFavorite ? 'heart' : 'heart-outlined';
 
                             return (
                                 <TouchableOpacity>
-                                <Card
-                                    style={styles.productInnerWrapper}
-                                    onPress={() => navigation.navigate("Details", { item: item })}>
-                                    <ImageBackground src={item.image} style={styles.productImage}>
-                                        <TouchableOpacity onPress={toggleHeart} style={styles.heart}>
-                                            <Entypo
-                                                name={heartIcon}
-                                                size={28}
-                                                color={colors.orange}
-                                            />
-                                        </TouchableOpacity>
-                                    </ImageBackground>
-                                    <Card.Content style={styles.productText}>
-                                        <Text style={styles.productItemTitle}>{item.title}</Text>
-                                        <Text style={styles.productPrice}>
-                                            {item.price}$
-                                        </Text>
-                                        <Text style={styles.productDescription}>{item.description}</Text>
-                                    </Card.Content>
-                                </Card>
-                            </TouchableOpacity>
+                                    <Card
+                                        style={styles.productInnerWrapper}
+                                        onPress={() => navigation.navigate("Details", { item: item })}>
+                                        <ImageBackground src={item.image} style={styles.productImage}>
+                                            <TouchableOpacity onPress={toggleCart} style={styles.cart}>
+                                                <FontAwesome
+                                                    name={cartIcon}
+                                                    size={28}
+                                                    color={colors.orange}
+                                                />
+                                            </TouchableOpacity>
+                                            <TouchableOpacity onPress={toggleHeart} style={styles.heart}>
+                                                <Entypo
+                                                    name={heartIcon}
+                                                    size={28}
+                                                    color={colors.orange}
+                                                />
+                                            </TouchableOpacity>
+                                        </ImageBackground>
+                                        <Card.Content style={styles.productText}>
+                                            <Text style={styles.productItemTitle}>{item.title}</Text>
+                                            <Text style={styles.productPrice}>
+                                                {item.price}$
+                                            </Text>
+                                            <Text style={styles.productDescription}>{item.description}</Text>
+                                        </Card.Content>
+                                    </Card>
+                                </TouchableOpacity>
                             )
                         }}
                         alwaysBounceVertical
@@ -98,7 +118,7 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexGrow: 1
+        flexGrow: 1,
     },
     menu: {
         flexDirection: 'row',
@@ -133,20 +153,21 @@ const styles = StyleSheet.create({
         marginVertical: 5
     },
     productText: {
-        fontSize: 16,
         color: colors.white,
         marginTop: 10,
         paddingBottom: 10,
-        fontFamily: 'Poppins_400Regular'
     },
     productItemTitle: {
-        fontSize: 16,
-        color: colors.black
+        fontSize: 17,
+        color: colors.black,
+        fontFamily: 'Poppins_400Regular',
+        fontWeight: '700'
     },
     productPrice: {
-        marginVertical: 5,
-        color: colors.black,
-        fontFamily: 'Poppins_400Regular'
+        marginBottom: 5,
+        color: colors.darkGray,
+        fontFamily: 'Poppins_400Regular',
+        fontSize: 14
     },
     productDescription: {
         fontFamily: 'Poppins_400Regular'
@@ -156,9 +177,28 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
         borderRadius: 10
     },
+    cart: {
+        position: 'absolute',
+        right: 15,
+        top: 15,
+        width: 44,
+        height: 44,
+        backgroundColor: colors.white,
+        borderRadius: 64,
+        justifyContent: 'center',
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5
+    },
     heart: {
         position: 'absolute',
-        right: 11,
+        right: 15,
         bottom: 15,
         width: 44,
         height: 44,

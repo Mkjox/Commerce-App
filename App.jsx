@@ -23,6 +23,7 @@ import {
 import * as SplashScreen from 'expo-splash-screen';
 import AppNavigator from './src/navigation/AppNavigator';
 import { FavoritesProvider } from "./src/assets/context/FavoritesContext";
+import { CartProvider } from "./src/assets/context/CartContext";
 
 export default function App() {
   const [loaded, error] = useFonts({
@@ -58,7 +59,9 @@ export default function App() {
 
   return (
     <FavoritesProvider>
-      <AppNavigator />
+      <CartProvider>
+        <AppNavigator />
+      </CartProvider>
     </FavoritesProvider>
   );
 }

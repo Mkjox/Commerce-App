@@ -24,28 +24,35 @@ const FavoriteScreen = () => {
 
     return (
         <SafeAreaView>
+            <View style={styles.titleWrapper}>
+                <Text style={styles.title}>
+                    Favorited Items
+                </Text>
+            </View>
             <FlatList
                 alwaysBounceVertical
                 showsVerticalScrollIndicator={false}
                 data={favorites}
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => (
-                    <Card style={styles.productInnerWrapper}>
-                        <ImageBackground src={item.image} style={styles.productImage}>
-                            <TouchableOpacity onPress={() => handleRemoveFavorite(item.id)} style={styles.heart}>
-                                <Entypo
-                                    name='heart'
-                                    size={28}
-                                    color={colors.orange}
-                                />
-                            </TouchableOpacity>
-                        </ImageBackground>
-                        <Card.Content style={styles.productText}>
-                            <Text style={styles.productItemTitle}>{item.title}</Text>
-                            <Text style={styles.productPrice}>{item.price}$</Text>
-                            <Text style={styles.productDescription}>{item.description}</Text>
-                        </Card.Content>
-                    </Card>
+                    <View style={styles.productWrapper}>
+                        <Card style={styles.productInnerWrapper}>
+                            <ImageBackground src={item.image} style={styles.productImage}>
+                                <TouchableOpacity onPress={() => handleRemoveFavorite(item.id)} style={styles.heart}>
+                                    <Entypo
+                                        name='heart'
+                                        size={28}
+                                        color={colors.orange}
+                                    />
+                                </TouchableOpacity>
+                            </ImageBackground>
+                            <Card.Content style={styles.productText}>
+                                <Text style={styles.productItemTitle}>{item.title}</Text>
+                                <Text style={styles.productPrice}>{item.price}$</Text>
+                                <Text style={styles.productDescription}>{item.description}</Text>
+                            </Card.Content>
+                        </Card>
+                    </View>
                 )}
             />
         </SafeAreaView>
@@ -62,6 +69,18 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginTop: 20,
     },
+    titleWrapper: {
+        margin: 8
+    },
+    title: {
+        textAlign: 'center',
+        fontFamily: 'Poppins_500Medium',
+        fontWeight: '700',
+        fontSize: 18
+    },
+    productWrapper: {
+        marginHorizontal: 10
+    },
     productInnerWrapper: {
         marginHorizontal: 2,
         marginVertical: 5
@@ -72,27 +91,28 @@ const styles = StyleSheet.create({
         borderRadius: 10
     },
     productText: {
-        fontSize: 16,
         color: colors.white,
         marginTop: 10,
         paddingBottom: 10,
-        fontFamily: 'Poppins_400Regular'
     },
     productItemTitle: {
-        fontSize: 16,
-        color: colors.black
+        fontSize: 18,
+        color: colors.black,
+        fontFamily: 'Poppins_400Regular',
+        fontWeight: '700'
     },
     productPrice: {
-        marginVertical: 5,
-        color: colors.black,
-        fontFamily: 'Poppins_400Regular'
+        marginBottom: 5,
+        color: colors.darkGray,
+        fontFamily: 'Poppins_400Regular',
+        fontSize: 14
     },
     productDescription: {
         fontFamily: 'Poppins_400Regular'
     },
     heart: {
         position: 'absolute',
-        right: 11,
+        right: 15,
         bottom: 15,
         width: 44,
         height: 44,
