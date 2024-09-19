@@ -24,6 +24,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import AppNavigator from './src/navigation/AppNavigator';
 import { FavoritesProvider } from "./src/assets/context/FavoritesContext";
 import { CartProvider } from "./src/assets/context/CartContext";
+import { AuthProvider } from "./src/assets/context/AuthContext";
 
 export default function App() {
   const [loaded, error] = useFonts({
@@ -58,10 +59,12 @@ export default function App() {
   }
 
   return (
-    <FavoritesProvider>
-      <CartProvider>
-        <AppNavigator />
-      </CartProvider>
-    </FavoritesProvider>
+    <AuthProvider>
+      <FavoritesProvider>
+        <CartProvider>
+          <AppNavigator />
+        </CartProvider>
+      </FavoritesProvider>
+    </AuthProvider>
   );
 }
