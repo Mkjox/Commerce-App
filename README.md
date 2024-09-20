@@ -1,4 +1,4 @@
-# Commerce Mobile APp
+# Commerce Mobile App
 
 ## Technologies, libraries etc. used in it
 
