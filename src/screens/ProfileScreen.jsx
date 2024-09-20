@@ -31,6 +31,10 @@ const ProfileScreen = () => {
         handleLogin(username, password);
     };
 
+    const logout = () => {
+        handleLogout();
+    };
+
     if (loading) {
         return <ActivityIndicator size="large" color={colors.orange} />;
     }
@@ -60,7 +64,7 @@ const ProfileScreen = () => {
                         <Text>Edit Profile</Text>
                     </TouchableOpacity> */}
 
-                            <TouchableOpacity style={styles.logoutButton}>
+                            <TouchableOpacity style={styles.logoutButton} onPress={logout}>
                                 <Text style={styles.logoutButtonText}>Logout</Text>
                             </TouchableOpacity>
                         </View>
@@ -82,9 +86,10 @@ const ProfileScreen = () => {
                         value={password}
                         onChangeText={setPassword}
                         style={styles.input}
+                        secureTextEntry
                     />
 
-                    <TouchableOpacity style={styles.loginButton}>
+                    <TouchableOpacity style={styles.loginButton} onPress={login}>
                         <Text style={styles.loginButtonText}>
                             Login
                         </Text>
