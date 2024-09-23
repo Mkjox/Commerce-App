@@ -16,3 +16,8 @@
 - Login and Logout
 
 ➡ I used fake api to create this project for it to be a reference and actually I was gonna share another project instead of this, which it is called TravelApp on my profile you can check it if you want.
+
+
+
+https://github.com/user-attachments/assets/75b6fcfd-d1e2-4929-9efc-7eea8025323c
+
